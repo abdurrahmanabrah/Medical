@@ -21,7 +21,7 @@ namespace Medical.Controllers
         {
             return _context.Degree.ToList();
         }
-        [HttpGet("Id")]
+        [HttpGet("{Id:int}")]
         public ActionResult<Degree> Get(int id) 
         {
             var degree = _context.Degree.Find(id);
@@ -43,6 +43,17 @@ namespace Medical.Controllers
             _context.Degree.Add(degree);
             _context.SaveChanges();
             return CreatedAtRoute(new {id = degree.Id},degree);
+        }
+        [HttpPut]
+        public IActionResult Put([FromBody] Degree degree)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _context.Entry(degree).State= Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+            return CreatedAtRoute(new { id = degree.Id }, degree);
         }
 
     }
