@@ -1,0 +1,72 @@
+﻿@model MedicalView.ViewModels.Doctor
+
+@{
+    ViewData["Title"] = "Create Doctor";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Create Doctor</h2>
+    <form asp-action="Create" method="post" enctype="multipart/form-data" asp-controller="Doctors" class="needs-validation" novalidate>
+        <div class="row">
+            <!-- Name -->
+            <div class="col-md-6 mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <!-- Degree -->
+            <div class="col-md-6 mb-3">
+                <label asp-for="DegreeId" class="form-label">Degree</label>
+                <select asp-for="DegreeId" asp-items="@ViewBag.DegreeId" class="form-select">
+                    <option value="0">Select Degree</option>
+                </select>
+                <span asp-validation-for="DegreeId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Institute -->
+            <div class="col-md-6 mb-3">
+                <label asp-for="InstituteId" class="form-label">Institute</label>
+                <select asp-for="InstituteId" asp-items="@ViewBag.InstituteId" class="form-select">
+                    <option value="0">Select Institute</option>
+                </select>
+                <span asp-validation-for="InstituteId" class="text-danger"></span>
+            </div>
+
+            <!-- Consultation -->
+            <div class="col-md-6 mb-3">
+                <label asp-for="ConsultationId" class="form-label">Consultation</label>
+                <select asp-for="ConsultationId" asp-items="@ViewBag.ConsultationId" class="form-select">
+                    <option value="0">Select Consultation</option>
+                </select>
+                <span asp-validation-for="ConsultationId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- BMDC NO -->
+            <div class="col-md-6 mb-3">
+                <label asp-for="BMDCNO" class="form-label"></label>
+                <input asp-for="BMDCNO" class="form-control" />
+                <span asp-validation-for="BMDCNO" class="text-danger"></span>
+            </div>
+
+            <!-- Special Interest -->
+            <div class="col-md-6 mb-3">
+                <label asp-for="SpecialInterestId" class="form-label">Special Interest</label>
+                <select asp-for="SpecialInterestId" asp-items="@ViewBag.SpecialInterestId" class="form-select">
+                    <option value="0">Select Special Interest</option>
+                </select>
+                <span asp-validation-for="SpecialInterestId" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+            <!-- Buttons -->
+            <button type="submit" class="btn btn-primary me-2">Create</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>

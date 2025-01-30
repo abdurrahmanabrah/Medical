@@ -2,7 +2,7 @@
 using MedicalView.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
-
+ 
 namespace MedicalView.Controllers
 {
     public class DegreesController : Controller
@@ -70,8 +70,15 @@ namespace MedicalView.Controllers
         }
 
 
+
+
+
+
+
+
+
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
@@ -140,6 +147,21 @@ namespace MedicalView.Controllers
 
             return View(degree);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         [HttpGet]

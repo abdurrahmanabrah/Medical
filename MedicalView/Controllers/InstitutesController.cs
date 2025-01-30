@@ -1,24 +1,26 @@
-﻿//using Hospital.Model;
-using MedicalView.ViewModels;
+﻿using MedicalView.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MedicalView.Controllers
 {
-    public class ConsultationsController : Controller
+    public class InstitutesController : Controller
     {
-        public async Task <IActionResult> Index()
+        
+            public async Task<IActionResult> Index()
         {
-            List<Consultation> oconsultation = new List<Consultation>();
+            List<Institute> institutes = new List<Institute>();
             using (var client = new HttpClient())
             {
-                var res = await client.GetAsync("https://localhost:7050/api/Consultations");
-                if (res.IsSuccessStatusCode)
+                var response = await client.GetAsync("https://localhost:7050/api/Institutes");
+                if (response.IsSuccessStatusCode)
                 {
-                    oconsultation = res.Content.ReadAsAsync<List<Consultation>>().Result;
-                    return View(oconsultation);
+                    institutes = response.Content.ReadAsAsync<List<Institute>>().Result;
+                    return View(institutes);
                 }
+
             }
-            return View(Enumerable.Empty<Consultation>());
+
+            return View(Enumerable.Empty<Institute>());
         }
 
         [HttpGet]
@@ -29,18 +31,18 @@ namespace MedicalView.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Consultation consultation)
+        public async Task<IActionResult> Create(Institute institute)
         {
             if (!ModelState.IsValid)
             {
-                return View(consultation);
+                return View(institute);
             }
 
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var response = await client.PostAsJsonAsync("https://localhost:7050/api/Consultations", consultation);
+                    var response = await client.PostAsJsonAsync("https://localhost:7050/api/Institutes", institute);
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction(nameof(Index));
@@ -48,7 +50,7 @@ namespace MedicalView.Controllers
                     else
                     {
                         // Handle API error
-                        ViewBag.ErrorMessage = "Failed to create a new consultation.";
+                        ViewBag.ErrorMessage = "Failed to create a new Institute.";
                     }
 
                 }
@@ -64,33 +66,32 @@ namespace MedicalView.Controllers
                 ViewBag.ErrorMessage = $"An error occurred: {ex.Message}";
             }
 
-            return View(consultation);
+            return View(institute);
         }
 
-
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
             try
             {
-                Consultation consultation = new Consultation();
-                
+                Institute institute = new Institute();
+                //degree.Fi(Id == id);
 
                 using (var client = new HttpClient())
                 {
 
-                    var response = await client.GetAsync("https://localhost:7050/api/Consultations/"+id);
+                    var response = await client.GetAsync("https://localhost:7050/api/Institutes/" + id);
                     if (response.IsSuccessStatusCode)
                     {
                         // return RedirectToAction(nameof(Index));
-                        consultation = response.Content.ReadAsAsync<Consultation>().Result;
-                        return View(consultation);
+                        institute = response.Content.ReadAsAsync<Institute>().Result;
+                        return View(institute);
                     }
                     else
                     {
                         // Handle API error
                         //ViewBag.ErrorMessage = "Failed to create a new degree.";
-                        ViewBag.ErrorMessage = "Failed to fetch the degree Consultations.";
+                        ViewBag.ErrorMessage = "Failed to fetch the degree details.";
                     }
 
                 }
@@ -106,18 +107,18 @@ namespace MedicalView.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Consultation consultation)
+        public async Task<IActionResult> Edit(Institute institute)
         {
             if (!ModelState.IsValid)
             {
-                return View(consultation);
+                return View(institute);
             }
 
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var response = await client.PutAsJsonAsync($"https://localhost:7050/api/Consultations", consultation);
+                    var response = await client.PutAsJsonAsync($"https://localhost:7050/api/Institutes", institute);
                     if (response.IsSuccessStatusCode)
                     {
                         return RedirectToAction(nameof(Index));
@@ -126,18 +127,17 @@ namespace MedicalView.Controllers
                     {
                         // Handle API error
                         //ViewBag.ErrorMessage = "Failed to create a new degree.";
-                        ViewBag.ErrorMessage = "Failed to fetch the degree Consultations.";
+                        ViewBag.ErrorMessage = "Failed to fetch the degree Institute.";
                     }
-
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.ErrorMessage = $"An error occurred: {ex.Message}";
             }
-
-            return View(consultation);
+            return View(institute);
         }
+
 
     }
 }
